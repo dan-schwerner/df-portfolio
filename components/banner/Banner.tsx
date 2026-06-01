@@ -28,9 +28,9 @@ const Banner = () => {
                 }}
             >
                 <Container>
-                    <Typography sx={{fontSize: '1.6rem', color: 'white'}}>Hi, my name is</Typography>
+                    <Typography sx={{fontSize: '1.6rem', color: 'white'}}>L-Iklin</Typography>
                     <Typography variant="h1" sx={{fontSize: '6rem', color: 'white'}}>Dan Falzon</Typography>
-                    <Typography sx={{fontSize: '1.6rem', color: 'white', marginTop: '1rem'}}>Software Engineer & Manager</Typography>
+                    <Typography sx={{fontSize: '1.6rem', color: 'white', marginTop: '1rem'}}>Inġinier tas-Softwer u Maniġer</Typography>
                     <Button 
                         variant="outlined" 
                         color='secondary'
@@ -42,7 +42,7 @@ const Banner = () => {
                             marginTop: '2rem'
                         }}
                     >
-                        GET IN TOUCH
+                        IKKUNTATTJANI
                     </Button>
                 </Container>
                 
@@ -61,7 +61,7 @@ const Banner = () => {
                     >
                         <Image 
                             src={profilepic}
-                            alt="Picture of Daniel Falzon"
+                            alt="Ritratt ta' Daniel Falzon"
                             layout="fill"
                             objectFit="scale-down"
                             objectPosition="bottom"

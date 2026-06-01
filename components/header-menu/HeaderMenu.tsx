@@ -2,6 +2,7 @@
 'use client'
 
 import { FC, useState } from "react";
+import Link from "next/link";
 
 import { AppBar, Box, Toolbar, Typography, IconButton, Button } from "@mui/material";
 import { Menu } from '@mui/icons-material';
@@ -25,7 +26,7 @@ const HeaderMenu: FC<HeaderMenuProps> = ({menuItems}) => {
                 <Toolbar sx={{height: '5rem'}}>
                     <IconButton
                         color="inherit"
-                        aria-label="open drawer"
+                        aria-label="iftaħ il-menu"
                         edge="start"
                         onClick={handleDrawerToggle}
                         sx={{ mr: 2, display: { sm: 'none'}}}
@@ -41,7 +42,7 @@ const HeaderMenu: FC<HeaderMenuProps> = ({menuItems}) => {
                     </Typography>
                     <Box sx={{ display: { xs: 'none', sm: 'block'}}}>
                         {menuItems.map((item) => (
-                            <Button key={item.name} sx={{ color: '#fff'}} href={item.link}>
+                            <Button key={item.name} component={Link} sx={{ color: '#fff'}} href={item.link}>
                                 {item.name}
                             </Button>
                         ))}

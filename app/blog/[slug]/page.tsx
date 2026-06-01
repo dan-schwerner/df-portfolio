@@ -6,6 +6,7 @@ import Contact from "@/components/contact/Contact";
 import mapToBlogPost from "@/app/sanity/mappers";
 import { BlogPost } from "@/types/Types";
 import BlogCard from "@/components/blog-card/BlogCard";
+import { getPortableTextComponents } from "@/app/sanity/portableTextComponents";
 
 const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]`;
 const OTHER_POSTS_QUERY = `*[_type == "post" && defined(slug.current) && slug.current != $slug]|order(publishedAt desc)[0...3]{
@@ -21,11 +22,13 @@ const OTHER_POSTS_QUERY = `*[_type == "post" && defined(slug.current) && slug.cu
 
 const options = { next: { revalidate: 30 } };
 const { projectId, dataset } = client.config();
+const portableTextComponents = getPortableTextComponents(projectId, dataset);
 
-export default async function PostPage({ params }: { params: { slug: string } }) {
+export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
   const [post, otherPosts] = await Promise.all([
-    client.fetch(POST_QUERY, params, options),
-    client.fetch(OTHER_POSTS_QUERY, params, options)
+    client.fetch(POST_QUERY, { slug }, options),
+    client.fetch(OTHER_POSTS_QUERY, { slug }, options)
   ]);
 
   const blogPost = mapToBlogPost(post, projectId, dataset);
@@ -34,7 +37,7 @@ export default async function PostPage({ params }: { params: { slug: string } })
     .filter((post: BlogPost | undefined): post is BlogPost => post !== undefined);
 
   if (!blogPost) {
-    return <div>Post not found</div>;
+    return <div>L-artiklu ma nstabx</div>;
   }
 
   return (
@@ -48,14 +51,14 @@ export default async function PostPage({ params }: { params: { slug: string } })
             justifyContent: 'center'
           }}
         >
-          <Grid item xs={12} md={8}>
+          <Grid size={{ xs: 12, md: 8 }}>
             <Box sx={{ py: 4 }}>
               <Typography variant="h3" sx={{ mb: 2 }}>
                 {blogPost.title}
               </Typography>
               
               <Typography variant="body2" color="text.secondary" sx={{ mb: 4 }}>
-                {blogPost.author} ({new Date(blogPost.publishedAt).toLocaleDateString()})
+                {blogPost.author} ({new Date(blogPost.publishedAt).toLocaleDateString('mt-MT')})
               </Typography>
 
               {blogPost.imageUrl && (
@@ -83,32 +86,25 @@ export default async function PostPage({ params }: { params: { slug: string } })
                   fontWeight: 'bold'
                 }
               }}>
-                <PortableText value={blogPost.content} />
+                <PortableText value={blogPost.content} components={portableTextComponents} />
               </Box>
             </Box>
           </Grid>
 
-          <Grid 
-            item 
-            md={4} 
-            sx={{ 
+          <Grid
+            size={{ md: 4 }}
+            sx={{
               display: { xs: 'none', md: 'block' }
             }}
           >
             <Box sx={{ py: 4 }}>
-              <Typography variant="h5" sx={{ mb: 3 }}>Other Posts</Typography>
-              <Grid 
-                container 
+              <Typography variant="h5" sx={{ mb: 3 }}>Artikli Oħra</Typography>
+              <Grid
+                container
                 spacing={2}
-                sx={{ 
-                  '& .MuiGrid-item': {
-                    maxWidth: 330,
-                    width: '100%'
-                  }
-                }}
               >
                 {otherBlogPosts.map((post: BlogPost) => (
-                  <Grid item xs={12} key={post.id}>
+                  <Grid size={12} key={post.id} sx={{ maxWidth: 330, width: '100%' }}>
                     <BlogCard {...post} />
                   </Grid>
                 ))}

@@ -23,7 +23,10 @@ const theme = createTheme({
       fontWeight: 'normal'
     },
     h2: {
-      margin: '2rem 0rem',
+      fontSize: 'clamp(1.8rem, 3vw, 2.8rem)',
+      fontWeight: 700,
+      lineHeight: 1.2,
+      margin: '0 0 2rem',
       textAlign: 'left',
       fontFamily: roboto.style.fontFamily
     },
@@ -33,11 +36,13 @@ const theme = createTheme({
     },
     body1: {
       marginBottom: '1rem',
-      fontSize: '1.2rem'
+      fontSize: '1rem',
+      lineHeight: 1.75
     },
     body2: {
       marginBottom: '1rem',
-      fontSize: '1rem'
+      fontSize: '0.9rem',
+      lineHeight: 1.65
     }
   },
   palette: {
@@ -80,4 +85,9 @@ const theme = createTheme({
   }
 });
 
-export default responsiveFontSizes(theme);
+// Skip h2/body1/body2 so their explicit reference-matched sizes (h2 uses a
+// self-responsive clamp; body sizes are fixed) aren't overridden by the
+// auto-generated responsive breakpoints. Other headings still scale responsively.
+export default responsiveFontSizes(theme, {
+  variants: ['h1', 'h3', 'h4', 'h5', 'h6'],
+});

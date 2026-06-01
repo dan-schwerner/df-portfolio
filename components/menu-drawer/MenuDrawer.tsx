@@ -1,5 +1,6 @@
 import { Box, Divider, Drawer, List, ListItem, ListItemButton, ListItemText, Typography } from "@mui/material"
 import { MenuItem } from "@/types/Types";
+import Link from "next/link";
 import { FC } from "react"
 
 type HandleClose = () => void;
@@ -32,7 +33,7 @@ const MenuDrawer: FC<MenuDrawerProps> = ({enabled, callback, menuItems}) => {
                 <List>
                     {menuItems.map((item) => (
                     <ListItem key={item.name} disablePadding>
-                        <ListItemButton sx={{ textAlign: 'center' }} href={item.link}>
+                        <ListItemButton component={Link} sx={{ textAlign: 'center' }} href={item.link}>
                         <ListItemText primary={item.name} />
                         </ListItemButton>
                     </ListItem>

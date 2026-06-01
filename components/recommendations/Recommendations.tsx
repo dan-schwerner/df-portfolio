@@ -14,9 +14,9 @@ const Recommendations: FC<RecommendationsProps> = ({recommendations}) => {
                 variant="h2"
                 id='recommendations'
             >
-                Things People Say
+                {"X'Jgħidu n-Nies"}
             </Typography>
-            <RecommendationSlider recommendations={recommendations} />
+            <RecommendationSlider texts={recommendations.map((r) => r.text)} />
         </>
     )
 }

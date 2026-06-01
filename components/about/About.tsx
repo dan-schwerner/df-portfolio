@@ -1,19 +1,16 @@
-import { ContentItem } from "@/types/Types";
-import { Container, Typography } from "@mui/material";
+import { BlogAbout } from "@/app/sanity/queries";
+import BlogIntro from "../blog-intro/BlogIntro";
 import { FC } from "react";
-import ContentLoader from "../content-loader/ContentLoader";
 
 type AboutProps = {
-    contentItems: ContentItem[]
+    about: BlogAbout
 }
 
-const About: FC<AboutProps> = ({contentItems}) => {
-    return (
-        <>
-            <Typography variant='h2' id='about'>About Me</Typography>
-            <ContentLoader contentItems={contentItems} />
-        </>
-    )
-}
+// Home "About Me" renders the exact same content + component as the blog page's
+// About section (the shared `blogAbout` singleton, or its shared fallback). The
+// `id="about"` keeps the header menu's #about anchor working.
+const About: FC<AboutProps> = ({ about }) => (
+    <BlogIntro id="about" title={about.title} content={about.content} />
+);
 
 export default About;

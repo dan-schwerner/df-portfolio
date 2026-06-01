@@ -1,10 +1,10 @@
 export const formatDate = (dateString: string | undefined): string => {
     if(!dateString){
-        return 'Present';
+        return 'Preżenti';
     }
 
     const date = new Date(dateString);
-    const month = Intl.DateTimeFormat('en-US',  {month: 'long'}).format(date);
+    const month = Intl.DateTimeFormat('mt-MT',  {month: 'long'}).format(date);
     const year = date.getFullYear()
 
     return `${month} ${year}`
@@ -12,7 +12,7 @@ export const formatDate = (dateString: string | undefined): string => {
 
 export const getDayDifferenceText = (publishedAt: string | undefined): string => {
     if(!publishedAt){
-        return "today";
+        return "illum";
     }
 
     const now = new Date();
@@ -24,6 +24,6 @@ export const getDayDifferenceText = (publishedAt: string | undefined): string =>
     // Convert milliseconds to days
     const differenceInDays = Math.floor(differenceInMs / (1000 * 60 * 60 * 24));
   
-    return `${differenceInDays} days ago`;
+    return `${differenceInDays} ġranet ilu`;
 };
   

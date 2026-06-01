@@ -1,7 +1,6 @@
 import { BlogPost } from "@/types/Types";
-import { SanityImageSource } from "@sanity/image-url/lib/types/types";
+import { createImageUrlBuilder, type SanityImageSource } from "@sanity/image-url";
 import { SanityDocument } from "next-sanity";
-import imageUrlBuilder from "@sanity/image-url";
 
 const mapToBlogPost = (sanityPost: SanityDocument, projectId?: string, dataset?: string): BlogPost | undefined => {
 
@@ -30,7 +29,7 @@ const mapToBlogPost = (sanityPost: SanityDocument, projectId?: string, dataset?:
 
 const urlFor = (source: SanityImageSource, projectId: string, dataset :string) => {
     return projectId && dataset
-        ? imageUrlBuilder({ projectId, dataset }).image(source)
+        ? createImageUrlBuilder({ projectId, dataset }).image(source)
         : null;
 }
  

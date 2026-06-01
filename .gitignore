@@ -16,6 +16,10 @@
 # production
 /build
 
+# sanity studio build output + runtime cache
+/dist
+/.sanity
+
 # misc
 .DS_Store
 *.pem

@@ -2,7 +2,7 @@
 
 import { formatDate } from "@/app/utils";
 import { ExperienceItem } from "@/types/Types";
-import { ExpandMore, CheckCircleOutline } from "@mui/icons-material";
+import { ExpandMore, CheckCircleOutlined } from "@mui/icons-material";
 import { Accordion, AccordionDetails, AccordionSummary, List, ListItem, ListItemIcon, ListItemText, Typography } from "@mui/material";
 import { FC } from "react";
 
@@ -55,7 +55,7 @@ const ExperienceListItemsMobile: FC<ExperienceListItemsMobileProps> = ({experien
                                     key={`skill-${i}`}
                                     >
                                         <ListItemIcon>
-                                            <CheckCircleOutline />
+                                            <CheckCircleOutlined />
                                         </ListItemIcon>
                                         <ListItemText
                                             primary={skill}

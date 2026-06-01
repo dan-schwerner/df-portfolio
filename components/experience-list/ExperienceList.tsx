@@ -19,7 +19,7 @@ const ExperienceList: FC<ExperienceListProps> = ({experienceItems}) => {
     return(
         <>
             <Typography variant="h2" id='experience'>
-                Experience
+                Esperjenza
             </Typography>
             <Box
                 sx={{

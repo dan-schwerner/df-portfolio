@@ -4,13 +4,8 @@ body {
 
 html {
     scroll-behavior: smooth;
-}
-
-:target:before {
-    content:"";
-    display:block;
-    height:100px; /* fixed header height*/
-    margin:-100px 0 0; /* negative fixed header height */
+    /* Offset anchor scrolling so targets aren't hidden behind the fixed 5rem header. */
+    scroll-padding-top: 6rem;
 }
 
 a {

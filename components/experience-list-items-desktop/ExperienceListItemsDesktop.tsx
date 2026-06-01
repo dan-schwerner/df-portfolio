@@ -1,6 +1,6 @@
 import { formatDate } from "@/app/utils";
 import { ExperienceItem } from "@/types/Types";
-import { CheckCircleOutline } from "@mui/icons-material";
+import { CheckCircleOutlined } from "@mui/icons-material";
 import { Box, List, ListItem, ListItemIcon, ListItemText, Tab, Tabs, Typography } from "@mui/material";
 import { FC, ReactNode, SyntheticEvent, useState } from "react";
 
@@ -44,11 +44,11 @@ const TabPanel:FC<TabPanelProps> = ({children, index, value, content}) => (
                             }}
                         >
                             <ListItemIcon>
-                                <CheckCircleOutline />
+                                <CheckCircleOutlined />
                             </ListItemIcon>
                             <ListItemText
                                 primary={skill}
-                                primaryTypographyProps={{ marginBottom: '0px' }}
+                                slotProps={{ primary: { sx: { marginBottom: 0 } } }}
                             />
                         </ListItem>
                     ))
@@ -74,10 +74,10 @@ const ExperienceListItemsDesktop:FC<ExperienceListItemsDesktopProps> = ({experie
                 orientation="vertical"
                 value={value}
                 onChange={handleChange}
-                aria-label="Experience vertical tabs"
+                aria-label="Tabs vertikali tal-esperjenza"
                 variant="standard"
-                TabIndicatorProps={{
-                    style: { display: 'none' }
+                slotProps={{
+                    indicator: { style: { display: 'none' } }
                   }}
                 sx={{
                     overflow: 'visible'

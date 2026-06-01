@@ -6,7 +6,7 @@ const Contact = () => {
         <>
             <Box>
                 <Typography variant='h2' id="contact">
-                    Contact Me
+                    Ikkuntattjani
                 </Typography>
                 <Box sx={{
                     display: 'flex',
@@ -21,7 +21,7 @@ const Contact = () => {
                             alignContent: 'center'
                         }}
                     >
-                        Wish to reach out to collaborate on a project or discuss one of my blog posts? Feel free to reach out! 
+                        Tixtieq tikkollabora fuq proġett jew tiddiskuti xi blog post tiegħi? Tiddejjaqx tikkuntattjani!
                     </Typography>
                     <Box
                         sx={{

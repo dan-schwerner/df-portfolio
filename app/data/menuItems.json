@@ -1,20 +1,20 @@
 {
     "data": [
         {
-            "name": "Home",
+            "name": "Il-Bidu",
             "link": "#"
         },
         {
-            "name": "About Me",
+            "name": "Dwari",
             "link": "#about"
         },
         {
-            "name": "Experience",
-            "link": "#experience"
+            "name": "Rakkomandazzjonijiet",
+            "link": "#recommendations"
         },
         {
-            "name": "Recommendations",
-            "link": "#recommendations"
+            "name": "Blog",
+            "link": "#blog"
         }
     ]
 }
