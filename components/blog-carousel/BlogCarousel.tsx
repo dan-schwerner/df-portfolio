@@ -13,6 +13,9 @@ type BlogCarouselProps = {
     posts: BlogPost[];
 };
 
+// Generic image shown when a post has no image of its own, so cards never look empty.
+const FALLBACK_IMAGE = "/blog-placeholder.svg";
+
 // Carousel of the latest blog posts for the home page. Two cards on desktop,
 // one-and-a-half on mobile (swipeable peek). Cards share the visual design of
 // the "Values" cards with an image-on-top layout, are forced to equal height,
@@ -42,8 +45,10 @@ const BlogCarousel: FC<BlogCarouselProps> = ({ posts }) => {
         <Box
             sx={{
                 mt: 2,
+                mb: { xs: 4, md: 6 },
                 // Gutters between cards: pull the list out, pad each slide's wrapper.
-                "& .slick-list": { mx: -2 },
+                // Vertical padding gives the card shadows room so they aren't clipped.
+                "& .slick-list": { mx: -2, py: 1 },
                 "& .slick-slide > div": { height: "100%", px: 2 },
                 // Equal-height cards regardless of excerpt length.
                 "& .slick-track": { display: "flex" },
@@ -53,21 +58,19 @@ const BlogCarousel: FC<BlogCarouselProps> = ({ posts }) => {
         >
             <Slider {...settings}>
                 {posts.map((post) => (
-                    <Box key={post.id} sx={{ height: "100%", pb: 1 }}>
+                    <Box key={post.id} sx={{ height: "100%" }}>
                         <Card sx={{ height: "100%", display: "flex" }}>
                             <CardActionArea
                                 component={Link}
                                 href={`/blog/${post.slug}`}
                                 sx={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", alignItems: "stretch" }}
                             >
-                                {post.imageUrl && (
-                                    <CardMedia
-                                        component="img"
-                                        image={post.imageUrl}
-                                        alt={post.title}
-                                        sx={{ height: { xs: 200, md: 260 }, objectFit: "cover" }}
-                                    />
-                                )}
+                                <CardMedia
+                                    component="img"
+                                    image={post.imageUrl || FALLBACK_IMAGE}
+                                    alt={post.title}
+                                    sx={{ height: { xs: 200, md: 260 }, objectFit: "cover" }}
+                                />
                                 <CardContent sx={{ p: { xs: 3, md: 4 }, flex: 1, display: "flex", flexDirection: "column" }}>
                                     <Typography variant="caption" color="text.secondary" sx={{ display: "block", mb: 0.5 }}>
                                         {meta(post)}

@@ -30,7 +30,7 @@ const Banner = () => {
                 <Container>
                     <Typography sx={{fontSize: '1.6rem', color: 'white'}}>L-Iklin</Typography>
                     <Typography variant="h1" sx={{fontSize: '6rem', color: 'white'}}>Dan Falzon</Typography>
-                    <Typography sx={{fontSize: '1.6rem', color: 'white', marginTop: '1rem'}}>Inġinier tas-Softwer u Maniġer</Typography>
+                    <Typography sx={{fontSize: '1.6rem', color: 'white', marginTop: '1rem'}}>Software Engineer and Manager</Typography>
                     <Button 
                         variant="outlined" 
                         color='secondary'
