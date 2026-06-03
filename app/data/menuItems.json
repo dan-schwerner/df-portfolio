@@ -2,19 +2,19 @@
     "data": [
         {
             "name": "Il-Bidu",
-            "link": "#"
+            "link": "/"
         },
         {
             "name": "Dwari",
-            "link": "#about"
+            "link": "/#about"
         },
         {
             "name": "Rakkomandazzjonijiet",
-            "link": "#recommendations"
+            "link": "/#recommendations"
         },
         {
             "name": "Blog",
-            "link": "#blog"
+            "link": "/#blog"
         }
     ]
 }

@@ -106,7 +106,7 @@ const POSTS_QUERY = `*[
   slug,
   author,
   publishedAt,
-  "excerpt": array::join(string::split((pt::text(body)), "")[0..280], "") + "..."
+  "excerpt": array::join(string::split((pt::text(body)), "")[0..180], "") + "..."
 }`;
 
 /** Fetches the latest blog posts, mapped to the frontend BlogPost shape. */

@@ -18,6 +18,7 @@ const MenuDrawer: FC<MenuDrawerProps> = ({enabled, callback, menuItems}) => {
             onClose={callback}
             ModalProps={{
                 keepMounted: true, // Better open performance on mobile.
+                disableScrollLock: true, // Don't lock body scroll, so tapping a nav item can scroll to its #anchor.
               }}
               sx={{
                 display: { xs: 'block', sm: 'none' },

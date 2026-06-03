@@ -36,8 +36,8 @@ const BlogCarousel: FC<BlogCarouselProps> = ({ posts }) => {
         slidesToShow: Math.min(2, posts.length),
         slidesToScroll: 1,
         responsive: [
-            // Mobile: one full card and a half peek of the next, swipeable.
-            { breakpoint: 600, settings: { slidesToShow: 1.5, infinite: false } },
+            // Mobile: one near-full card with a small sliver of the next to hint scrollability.
+            { breakpoint: 600, settings: { slidesToShow: 1.15, infinite: false } },
         ],
     };
 
@@ -69,7 +69,7 @@ const BlogCarousel: FC<BlogCarouselProps> = ({ posts }) => {
                                     component="img"
                                     image={post.imageUrl || FALLBACK_IMAGE}
                                     alt={post.title}
-                                    sx={{ height: { xs: 200, md: 260 }, objectFit: "cover" }}
+                                    sx={{ height: { xs: 150, md: 260 }, objectFit: "cover" }}
                                 />
                                 <CardContent sx={{ p: { xs: 3, md: 4 }, flex: 1, display: "flex", flexDirection: "column" }}>
                                     <Typography variant="caption" color="text.secondary" sx={{ display: "block", mb: 0.5 }}>
@@ -78,7 +78,17 @@ const BlogCarousel: FC<BlogCarouselProps> = ({ posts }) => {
                                     <Typography component="h3" sx={{ fontSize: "1.15rem", fontWeight: 700, mb: "0.6rem" }}>
                                         {post.title}
                                     </Typography>
-                                    <Typography variant="body2" color="text.secondary" sx={{ mb: 0 }}>
+                                    <Typography
+                                        variant="body2"
+                                        color="text.secondary"
+                                        sx={{
+                                            mb: 0,
+                                            display: "-webkit-box",
+                                            WebkitBoxOrient: "vertical",
+                                            WebkitLineClamp: { xs: 3, md: 6 },
+                                            overflow: "hidden",
+                                        }}
+                                    >
                                         {post.excerpt}
                                     </Typography>
                                     <Typography sx={{ mt: "auto", pt: 2, color: "primary.main", fontWeight: 700 }}>
