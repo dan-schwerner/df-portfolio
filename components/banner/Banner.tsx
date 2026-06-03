@@ -59,13 +59,15 @@ const Banner = () => {
                             height: { xs: '300px', md: '100%' } // Adjust height as needed
                         }}
                     >
-                        <Image 
+                        <Image
                             src={profilepic}
                             alt="Ritratt ta' Daniel Falzon"
-                            layout="fill"
-                            objectFit="scale-down"
-                            objectPosition="bottom"
+                            fill
+                            sizes="(max-width: 900px) 100vw, 50vw"
+                            priority
                             style={{
+                                objectFit: 'contain',
+                                objectPosition: 'bottom',
                                 filter: 'brightness(0.95)'
                             }}
                         />
