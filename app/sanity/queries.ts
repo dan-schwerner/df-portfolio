@@ -1,32 +1,41 @@
 import { type SanityDocument } from "next-sanity";
 import { client } from "./client";
-import mapToBlogPost from "./mappers";
+import mapToBlogPost, { mapToProject } from "./mappers";
 import { BLOG_ABOUT_ID, BLOG_VALUES_ID, type ValueIconKey } from "./constants";
-import { type BlogPost } from "@/types/Types";
+import { type BlogPost, type Project } from "@/types/Types";
 
 export type BlogAbout = {
   title: string;
+  /** The bold lead quote shown at the top of the section. */
+  headerQuote?: string;
   content: string;
+  /** Areas of expertise, rendered as chips beneath the bio. */
+  tags?: string[];
 };
 
 /**
- * Shared fallback for the "About Me" section, used by BOTH the home page and the
- * blog page so they stay identical until the `blogAbout` singleton is created in
- * the Studio. Once that document exists, both pages render it instead.
+ * Fallback for the home "About Me" section, used until the `blogAbout` singleton
+ * is created/updated in the Studio. Short and punchy by design — a lead quote,
+ * two tight paragraphs and a few expertise tags. Edit the Studio document to
+ * change the live copy.
  */
 export const BLOG_ABOUT_FALLBACK: BlogAbout = {
   title: "Min Jien",
-  content: `Jisimni Daniel u jien mill-gżira Mediterranja ta' Malta. Sa minn età żgħira dejjem kont affaxxinat bl-Inġinerija tas-Softwer, u dan wassalni biex niggradwa fil-Computing u l-IT mill-Open University, università tat-tagħlim mill-bogħod ibbażata fir-Renju Unit. Hekk kif ksibt aktar esperjenza fil-qasam, skoprejt passjoni għall-Immaniġġjar tal-Inġinerija u bdejt napprezza l-valur kbir li dan ir-rwol iġib meta jsir sew.
+  headerQuote:
+    "Nibni sistemi li jikbru, jifilħu għall-piż, u jwasslu dak li jwiegħdu.",
+  content: `Minn dejjem affaxxinani nifhem kif jaħdmu s-sistemi — x'jagħmilhom effiċjenti u fejn jiġu nieqsa. Dik il-kurżità wasslitni għal degree fil-Computing & IT u karriera fl-inġinerija tas-softwer, fit-tmexxija ta' timijiet, u fl-arkitettura tas-sistemi.
 
-Wara li ħdimt B2B ma' diversi software houses lokali u B2C fl-industrija tal-iGaming, żviluppajt firxa wiesgħa ta' ħiliet. L-għarfien tiegħi jvarja mill-analiżi tad-data, il-ġbir tar-rekwiżiti, u l-immaniġġjar tat-timijiet sal-arkitettura tas-sistemi u l-iżvilupp tas-softwer, li jkopru sistemi kemm tal-backend kif ukoll tal-frontend. Il-pożizzjonijiet attwali u tal-passat tawni ambjent fejn nista' nottimizza u nkabbar it-timijiet biex jilħqu l-aspettattivi dejjem jikbru tas-sistemi taħt ir-responsabbiltà tiegħi.
-
-Għalkemm dawn il-pożizzjonijiet tawni esperjenza imprezzabbli u ħallewni nikber professjonalment, jien ukoll ħerqan li noffri l-għarfien tiegħi lil individwi u negozji lil hinn mix-xogħol full-time tiegħi. Għalhekk, minbarra li nintroduċi lili nnifsi u l-ħiliet tiegħi, dan il-portafoll se jservi bħala wirja tal-kapaċitajiet tiegħi permezz ta' lista ta' proġetti tal-passat u blog posts.
-
-Nispera li tgawdi ż-żjara tiegħek, u tiddejjaqx tikkuntattjani jekk tixtieq tikkollabora fuq proġett.`,
+Wara snin ma' software houses Maltin u fl-industrija tal-iGaming, illum napplika l-istess ħsieb għall-isfidi ta' pajjiżna. It-teknoloġija mhix maġija — imma applikata b'għaqal, hija fost l-aktar għodod b'saħħithom biex intejbu kif tiffunzjona soċjetà.`,
+  tags: [
+    "Software Engineering",
+    "Engineering Management",
+    "System Architecture",
+    "Data Analysis",
+  ],
 };
 
 /** Fetch the single "About Me" document by its fixed id. */
-const BLOG_ABOUT_QUERY = `*[_id == $id][0]{ title, content }`;
+const BLOG_ABOUT_QUERY = `*[_id == $id][0]{ title, headerQuote, content, tags }`;
 
 /**
  * Returns the blog "About Me" singleton from Sanity, or null if it hasn't been
@@ -120,4 +129,69 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
   return posts
     .map((post) => mapToBlogPost(post, projectId, dataset))
     .filter((post): post is BlogPost => post !== undefined);
+}
+
+/**
+ * Placeholder projects for the "Il-Proġetti Tiegħi" carousel, shown ONLY while
+ * no `project` documents exist in the Studio yet (same pattern as the About /
+ * Values fallbacks). Replace these by creating real projects in Sanity — once
+ * any exist, these examples disappear. They have no image, so the carousel
+ * renders the shared placeholder graphic for each.
+ */
+export const PROJECTS_FALLBACK: Project[] = [
+  {
+    id: "fallback-project-1",
+    title: "Pjattaforma tad-Data",
+    tagline: "Mid-data mhux maħduma għal deċiżjonijiet f'ħin reali.",
+    description:
+      "Pipelines u dashboards li jiġbru kollox f'post wieħed, biex it-timijiet jiddeċiedu fuq fatti — mhux fuq supponiment.",
+    imageUrl: "",
+    tags: ["Data", "Dashboards", "Cloud"],
+    url: "#",
+  },
+  {
+    id: "fallback-project-2",
+    title: "Sistema tal-iGaming",
+    tagline: "Skalabbiltà li tiflaħ eluf ta' transazzjonijiet kull sekonda.",
+    description:
+      "Arkitettura mibnija biex tibqa' stabbli taħt piż għoli, b'monitoraġġ u awtomazzjoni minn tarf sa tarf.",
+    imageUrl: "",
+    tags: ["Backend", "Scale", "iGaming"],
+    url: "#",
+  },
+  {
+    id: "fallback-project-3",
+    title: "Għodda għas-Settur Pubbliku",
+    tagline: "Servizzi diġitali li jlaħħqu mat-tkabbir tal-gżira.",
+    description:
+      "Soluzzjonijiet sempliċi u prammatiċi li jtejbu kif jaħdmu s-servizzi ta' kuljum għaċ-ċittadin.",
+    imageUrl: "",
+    tags: ["Settur Pubbliku", "UX", "Innovazzjoni"],
+    url: "#",
+  },
+];
+
+const PROJECTS_QUERY = `*[
+  _type == "project"
+]|order(coalesce(order, 9999) asc, _createdAt desc){
+  _id,
+  title,
+  tagline,
+  description,
+  image,
+  tags,
+  url
+}`;
+
+/** Fetches projects from Sanity, mapped to the frontend Project shape. */
+export async function getProjects(): Promise<Project[]> {
+  const { projectId, dataset } = client.config();
+  const docs = await client.fetch<SanityDocument[]>(
+    PROJECTS_QUERY,
+    {},
+    { next: { revalidate: 30 } },
+  );
+  return docs
+    .map((doc) => mapToProject(doc, projectId, dataset))
+    .filter((project): project is Project => project !== undefined);
 }

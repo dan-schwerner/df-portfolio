@@ -23,7 +23,7 @@ export default async function RootLayout({
   const menuItems: MenuItem[] = JSON.parse(response).data;
 
   return (
-    <html lang="en">
+    <html lang="mt">
       <body>
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>

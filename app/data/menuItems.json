@@ -5,16 +5,24 @@
             "link": "/"
         },
         {
+            "name": "Proġetti",
+            "link": "/#projects"
+        },
+        {
             "name": "Dwari",
             "link": "/#about"
+        },
+        {
+            "name": "Blog",
+            "link": "/#blog"
         },
         {
             "name": "Rakkomandazzjonijiet",
             "link": "/#recommendations"
         },
         {
-            "name": "Blog",
-            "link": "/#blog"
+            "name": "Kuntatt",
+            "link": "/#contact"
         }
     ]
 }

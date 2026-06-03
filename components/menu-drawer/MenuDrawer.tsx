@@ -31,13 +31,27 @@ const MenuDrawer: FC<MenuDrawerProps> = ({enabled, callback, menuItems}) => {
                 </Typography>
                 <Divider />
                 <List>
-                    {menuItems.map((item) => (
-                    <ListItem key={item.name} disablePadding>
-                        <ListItemButton sx={{ textAlign: 'center' }} href={item.link}>
-                        <ListItemText primary={item.name} />
-                        </ListItemButton>
-                    </ListItem>
-                    ))}
+                    {menuItems.map((item) => {
+                        // The contact item gets the same coral CTA treatment as the desktop menu.
+                        const isContact = item.link === '/#contact';
+                        return (
+                            <ListItem key={item.name} disablePadding sx={isContact ? { px: 2, py: 1 } : undefined}>
+                                <ListItemButton
+                                    href={item.link}
+                                    sx={isContact ? {
+                                        justifyContent: 'center',
+                                        borderRadius: 1,
+                                        bgcolor: 'cta.main',
+                                        color: 'cta.contrastText',
+                                        '&:hover': { bgcolor: 'cta.dark' },
+                                        '& .MuiListItemText-primary': { fontWeight: 700 },
+                                    } : { textAlign: 'center' }}
+                                >
+                                    <ListItemText primary={item.name} sx={isContact ? { flex: 'none' } : undefined} />
+                                </ListItemButton>
+                            </ListItem>
+                        );
+                    })}
                 </List>
             </Box>
         </Drawer>

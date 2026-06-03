@@ -1,4 +1,4 @@
-import { BlogPost } from "@/types/Types";
+import { BlogPost, Project } from "@/types/Types";
 import { createImageUrlBuilder, type SanityImageSource } from "@sanity/image-url";
 import { SanityDocument } from "next-sanity";
 
@@ -47,3 +47,34 @@ const mapToBlogPost = (sanityPost: SanityDocument, projectId?: string, dataset?:
 };
 
 export default mapToBlogPost;
+
+// Larger crop than blog cards: the project cards are graphic-heavy with the
+// image as the focal point, so we request a bigger, wider image.
+const buildProjectImageUrl = (image: SanityImageSource | undefined, projectId?: string, dataset?: string): string => {
+    try {
+        return urlFor(image, projectId, dataset)?.width(800).height(500).url() ?? "";
+    } catch {
+        return "";
+    }
+};
+
+// Maps a Sanity `project` document to the frontend Project shape. Returns
+// undefined (and logs) on a malformed document so a single bad doc doesn't
+// take down the whole carousel. imageUrl is "" when there's no image — the
+// carousel falls back to a placeholder so cards never look broken.
+export const mapToProject = (doc: SanityDocument, projectId?: string, dataset?: string): Project | undefined => {
+    try {
+        return {
+            id: doc._id,
+            title: doc.title,
+            tagline: doc.tagline ?? "",
+            description: doc.description ?? "",
+            imageUrl: buildProjectImageUrl(doc.image, projectId, dataset),
+            tags: Array.isArray(doc.tags) ? doc.tags : [],
+            url: doc.url || undefined,
+        };
+    } catch (ex) {
+        console.error("Mapping Sanity project failed:", ex, doc);
+        return undefined;
+    }
+};

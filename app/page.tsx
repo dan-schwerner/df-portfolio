@@ -7,16 +7,19 @@ import { Recommendation } from '@/types/Types';
 import Recommendations from '@/components/recommendations/Recommendations';
 import Contact from '@/components/contact/Contact';
 import Section from '@/components/section/Section';
-import Values from '@/components/values/Values';
 import BlogCarousel from '@/components/blog-carousel/BlogCarousel';
+import ProjectsCarousel from '@/components/projects-carousel/ProjectsCarousel';
+import ChatWidget from '@/components/chat-widget/ChatWidget';
 import { Typography } from '@mui/material';
-import { getBlogAbout, BLOG_ABOUT_FALLBACK, getBlogValues, BLOG_VALUES_FALLBACK, getBlogPosts } from './sanity/queries';
+import { getBlogAbout, BLOG_ABOUT_FALLBACK, getBlogValues, BLOG_VALUES_FALLBACK, getBlogPosts, getProjects, PROJECTS_FALLBACK } from './sanity/queries';
 
 export default async function Home() {
 
-  const [aboutDoc, valuesDoc, blogPosts] = await Promise.all([getBlogAbout(), getBlogValues(), getBlogPosts()]);
+  const [aboutDoc, valuesDoc, blogPosts, projectDocs] = await Promise.all([getBlogAbout(), getBlogValues(), getBlogPosts(), getProjects()]);
   const about = aboutDoc ?? BLOG_ABOUT_FALLBACK;
   const values = valuesDoc ?? BLOG_VALUES_FALLBACK;
+  // Show real projects when any exist, otherwise the placeholder examples.
+  const projects = projectDocs.length ? projectDocs : PROJECTS_FALLBACK;
 
   const recommendationResponse = await fs.readFile(process.cwd() + '/app/data/recommendationContent.json', 'utf8');
   const recommendations: Recommendation[] = JSON.parse(recommendationResponse).data;
@@ -24,11 +27,12 @@ export default async function Home() {
   return (
     <main className={styles.main}>
       <Banner />
-      <Section>
-        <About about={about} />
+      <Section sx={{ pb: { xs: 1, md: 2 } }}>
+        <Typography variant="h2" component="h2" id="projects">Il-Proposti Tiegħi</Typography>
+        <ProjectsCarousel projects={projects} />
       </Section>
       <Section variant="muted">
-        <Values data={values} />
+        <About about={about} values={values} />
       </Section>
       {blogPosts.length > 0 && (
         <Section>
@@ -36,13 +40,13 @@ export default async function Home() {
           <BlogCarousel posts={blogPosts} />
         </Section>
       )}
-      {/* Experience section hidden for now */}
       <Section variant="muted">
         <Recommendations recommendations={recommendations} />
       </Section>
       <Section>
         <Contact />
       </Section>
+      <ChatWidget />
     </main>
   );
 }

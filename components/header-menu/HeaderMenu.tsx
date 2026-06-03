@@ -40,11 +40,25 @@ const HeaderMenu: FC<HeaderMenuProps> = ({menuItems}) => {
                         Dan
                     </Typography>
                     <Box sx={{ display: { xs: 'none', sm: 'block'}}}>
-                        {menuItems.map((item) => (
-                            <Button key={item.name} sx={{ color: '#fff'}} href={item.link}>
-                                {item.name}
-                            </Button>
-                        ))}
+                        {menuItems.map((item) => {
+                            // The contact item is a coral CTA; the rest stay as plain white links.
+                            const isContact = item.link === '/#contact';
+                            return isContact ? (
+                                <Button
+                                    key={item.name}
+                                    href={item.link}
+                                    variant="contained"
+                                    color="cta"
+                                    sx={{ ml: 1.5, fontWeight: 700 }}
+                                >
+                                    {item.name}
+                                </Button>
+                            ) : (
+                                <Button key={item.name} sx={{ color: '#fff'}} href={item.link}>
+                                    {item.name}
+                                </Button>
+                            );
+                        })}
                     </Box>
                 </Toolbar>
             </AppBar>

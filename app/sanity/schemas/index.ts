@@ -2,6 +2,7 @@ import { type SchemaTypeDefinition } from "sanity";
 import { blogAboutType } from "./blogAbout";
 import { blogValuesType } from "./blogValues";
 import { postType } from "./post";
+import { projectType } from "./project";
 
 /**
  * Schema types registered with the Sanity Studio. Add new document/object
@@ -11,4 +12,4 @@ import { postType } from "./post";
  *   ...
  *   schema: { types: schemaTypes }
  */
-export const schemaTypes: SchemaTypeDefinition[] = [postType, blogAboutType, blogValuesType];
+export const schemaTypes: SchemaTypeDefinition[] = [postType, projectType, blogAboutType, blogValuesType];

@@ -49,7 +49,7 @@ export const structure: StructureResolver = (S) =>
     .title("Content")
     .items([
       S.listItem()
-        .title("Blog — About Me")
+        .title("About Me")
         .id(BLOG_ABOUT_ID)
         .child(
           S.document().schemaType(BLOG_ABOUT_ID).documentId(BLOG_ABOUT_ID),

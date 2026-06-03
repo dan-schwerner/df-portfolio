@@ -3,6 +3,25 @@ import { Roboto } from 'next/font/google';
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 import { Raleway } from "next/font/google";
 
+// Custom "cta" palette colour — a contrasting coral used ONLY for the contact
+// call-to-action buttons (desktop menu Kuntatt, banner, chat bubble, contact
+// form submit). Augment MUI's types so it can be used via `color="cta"`.
+declare module '@mui/material/styles' {
+  interface Palette { cta: Palette['primary']; }
+  interface PaletteOptions { cta?: PaletteOptions['primary']; }
+}
+declare module '@mui/material/Button' {
+  interface ButtonPropsColorOverrides { cta: true; }
+}
+declare module '@mui/material/Fab' {
+  interface FabPropsColorOverrides { cta: true; }
+}
+
+// Base theme used only to access `augmentColor` (generates the light/dark/hover
+// tokens for the custom colour).
+const base = createTheme();
+const CORAL = '#F2674E';
+
 const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
   subsets: ['latin'],
@@ -51,7 +70,11 @@ const theme = createTheme({
     },
     secondary: {
       main: '#ffff'
-    }
+    },
+    cta: base.palette.augmentColor({
+      color: { main: CORAL, contrastText: '#ffffff' },
+      name: 'cta',
+    }),
   },
   components: {
     MuiTab: {

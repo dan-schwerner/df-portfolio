@@ -41,6 +41,16 @@ export type BlogPost = {
     excerpt: string | undefined
 }
 
+export type Project = {
+    id: string
+    title: string
+    tagline: string
+    description: string
+    imageUrl: string
+    tags: string[]
+    url: string | undefined
+}
+
 export enum ContentItemType {
     h2 = "h2",
     h3 = "h3",
