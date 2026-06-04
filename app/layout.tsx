@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import './global.css';
 import {promises as fs } from 'fs';
 import { MenuItem } from "@/types/Types";
@@ -24,6 +25,22 @@ export default async function RootLayout({
 
   return (
     <html lang="mt">
+      <head>
+        {/* Google tag (gtag.js) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-BRKTGD2GE5"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-BRKTGD2GE5');
+          `}
+        </Script>
+      </head>
       <body>
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
