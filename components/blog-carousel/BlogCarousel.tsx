@@ -69,7 +69,9 @@ const BlogCarousel: FC<BlogCarouselProps> = ({ posts }) => {
                                     component="img"
                                     image={post.imageUrl || FALLBACK_IMAGE}
                                     alt={post.title}
-                                    sx={{ height: { xs: 150, md: 260 }, objectFit: "cover" }}
+                                    // flexShrink: 0 stops Safari/WebKit from squashing the image
+                                    // below its set height inside the equal-height column flex card.
+                                    sx={{ flexShrink: 0, height: { xs: 150, md: 260 }, objectFit: "cover" }}
                                 />
                                 <CardContent sx={{ p: { xs: 3, md: 4 }, flex: 1, display: "flex", flexDirection: "column" }}>
                                     <Typography variant="caption" color="text.secondary" sx={{ display: "block", mb: 0.5 }}>
