@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Box, Dialog, DialogContent, Fab, IconButton, Typography, Zoom } from "@mui/material";
 import { ChatBubbleOutlined, Close } from "@mui/icons-material";
+import { useTranslations } from "next-intl";
 import ContactForm from "../contact/ContactForm";
 
 // Floating "chat" bubble pinned to the bottom-right. It stays hidden while the
@@ -10,6 +11,7 @@ import ContactForm from "../contact/ContactForm";
 // with an IntersectionObserver on the banner's #banner element). Clicking it
 // opens a dialog containing the same contact form used at the bottom of the page.
 const ChatWidget = () => {
+    const t = useTranslations('chatWidget');
     const [visible, setVisible] = useState(false);
     const [open, setOpen] = useState(false);
 
@@ -32,7 +34,7 @@ const ChatWidget = () => {
             <Zoom in={visible} unmountOnExit>
                 <Fab
                     color="cta"
-                    aria-label="Iftaħ il-formola tal-kuntatt"
+                    aria-label={t('open')}
                     onClick={() => setOpen(true)}
                     sx={{ position: "fixed", bottom: { xs: 16, md: 24 }, right: { xs: 16, md: 24 }, zIndex: 1200 }}
                 >
@@ -43,9 +45,9 @@ const ChatWidget = () => {
             <Dialog open={open} onClose={() => setOpen(false)} maxWidth="sm" fullWidth>
                 <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", px: 3, pt: 2.5, pb: 1 }}>
                     <Typography variant="h6" component="h2">
-                        Ikkuntattjani
+                        {t('title')}
                     </Typography>
-                    <IconButton aria-label="agħlaq" onClick={() => setOpen(false)} edge="end">
+                    <IconButton aria-label={t('close')} onClick={() => setOpen(false)} edge="end">
                         <Close />
                     </IconButton>
                 </Box>

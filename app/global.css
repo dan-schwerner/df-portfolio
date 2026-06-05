@@ -8,6 +8,13 @@ html {
     scroll-padding-top: 6rem;
 }
 
+/* The header is a slim 3.5rem bar on mobile (see HeaderMenu Toolbar). */
+@media (max-width: 599.95px) {
+    html {
+        scroll-padding-top: 4.5rem;
+    }
+}
+
 a {
     text-decoration: none;
     color: inherit;

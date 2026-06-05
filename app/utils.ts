@@ -10,20 +10,14 @@ export const formatDate = (dateString: string | undefined): string => {
     return `${month} ${year}`
 }
 
-export const getDayDifferenceText = (publishedAt: string | undefined): string => {
+// Whole days between `publishedAt` and now (0 if missing or in the future). The
+// locale-aware "today" / "X days ago" text is produced by callers via the
+// `blog.relativeDays` ICU plural message, so this stays language-agnostic.
+export const daysSince = (publishedAt: string | undefined): number => {
     if(!publishedAt){
-        return "illum";
+        return 0;
     }
 
-    const now = new Date();
-    const publishedDate = new Date(publishedAt);
-  
-    // Calculate the difference in milliseconds
-    const differenceInMs = now.getTime() - publishedDate.getTime();
-  
-    // Convert milliseconds to days
-    const differenceInDays = Math.floor(differenceInMs / (1000 * 60 * 60 * 24));
-  
-    return `${differenceInDays} ġranet ilu`;
+    const differenceInMs = new Date().getTime() - new Date(publishedAt).getTime();
+    return Math.max(0, Math.floor(differenceInMs / (1000 * 60 * 60 * 24)));
 };
-  

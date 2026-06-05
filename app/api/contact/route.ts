@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
+import { getTranslations } from "next-intl/server";
 import { Resend } from "resend";
+import { defaultLocale, isLocale } from "@/i18n/config";
 
 /**
  * Contact endpoint shared by the bottom contact form, the chat-bubble form and
@@ -30,11 +33,17 @@ const escapeHtml = (s: string) =>
     .replace(/"/g, "&quot;");
 
 export async function POST(req: Request) {
+  // Localize the visitor-facing responses to their chosen UI locale. The owner
+  // notification email below stays in Maltese (it's read by the site owner).
+  const cookieLocale = (await cookies()).get("NEXT_LOCALE")?.value;
+  const locale = isLocale(cookieLocale) ? cookieLocale : defaultLocale;
+  const t = await getTranslations({ locale, namespace: "contactApi" });
+
   let body: Record<string, unknown>;
   try {
     body = await req.json();
   } catch {
-    return NextResponse.json({ ok: false, error: "Talba invalida." }, { status: 400 });
+    return NextResponse.json({ ok: false, error: t("invalidRequest") }, { status: 400 });
   }
 
   // Honeypot: bots fill the hidden "company" field. Pretend success, send nothing.
@@ -49,17 +58,17 @@ export async function POST(req: Request) {
   const message = clean(body.message, 5000);
 
   if (!EMAIL_RE.test(email)) {
-    return NextResponse.json({ ok: false, error: "Daħħal email valida." }, { status: 400 });
+    return NextResponse.json({ ok: false, error: t("invalidEmail") }, { status: 400 });
   }
   if (source === "contact" && !message) {
-    return NextResponse.json({ ok: false, error: "Ikteb messaġġ." }, { status: 400 });
+    return NextResponse.json({ ok: false, error: t("emptyMessage") }, { status: 400 });
   }
 
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey || !TO) {
     console.error("[contact] Missing RESEND_API_KEY or CONTACT_TO_EMAIL env var.");
     return NextResponse.json(
-      { ok: false, error: "Is-servizz tal-email għadu mhux ikkonfigurat." },
+      { ok: false, error: t("notConfigured") },
       { status: 500 },
     );
   }
@@ -106,7 +115,7 @@ export async function POST(req: Request) {
     if (error) {
       console.error("[contact] Resend error:", error);
       return NextResponse.json(
-        { ok: false, error: "Ma rnexxilniex nibagħtu l-messaġġ. Erġa' pprova." },
+        { ok: false, error: t("sendFailed") },
         { status: 502 },
       );
     }

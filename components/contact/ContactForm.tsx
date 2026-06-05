@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from "react";
 import { Alert, Box, Button, Paper, Snackbar, Stack, TextField, Typography } from "@mui/material";
 import { CheckCircleOutlined } from "@mui/icons-material";
+import { useTranslations } from "next-intl";
 
 type ContactFormProps = {
     /** When true, render the fields without the outlined Paper wrapper (e.g. inside a dialog that already provides a surface). */
@@ -17,6 +18,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 // the message via Resend with Reply-To set to the visitor. On success it shows an
 // in-place thank-you plus a confirmation toast.
 const ContactForm = ({ bare = false }: ContactFormProps) => {
+    const t = useTranslations('contactForm');
     const [submitted, setSubmitted] = useState(false);
     const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -48,12 +50,12 @@ const ContactForm = ({ bare = false }: ContactFormProps) => {
             });
             const json = await res.json().catch(() => ({}));
             if (!res.ok || !json.ok) {
-                throw new Error(json.error || "Xi ħaġa marret ħażin. Erġa' pprova.");
+                throw new Error(json.error || t('error'));
             }
             setToastOpen(true);
             setSubmitted(true);
         } catch (err) {
-            setError(err instanceof Error ? err.message : "Xi ħaġa marret ħażin. Erġa' pprova.");
+            setError(err instanceof Error ? err.message : t('error'));
         } finally {
             setSubmitting(false);
         }
@@ -63,10 +65,10 @@ const ContactForm = ({ bare = false }: ContactFormProps) => {
         <Box sx={{ textAlign: "center", py: 4 }}>
             <CheckCircleOutlined sx={{ fontSize: 56, color: "primary.main", mb: 2 }} />
             <Typography variant="h6" component="p" sx={{ mb: 1 }}>
-                {"Grazzi talli ġejt f'kuntatt!"}
+                {t('successTitle')}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-                {"Se nwieġeb malajr kemm jista' jkun."}
+                {t('successBody')}
             </Typography>
         </Box>
     ) : (
@@ -82,9 +84,9 @@ const ContactForm = ({ bare = false }: ContactFormProps) => {
                 sx={{ display: "none" }}
             />
             <Stack spacing={2.5}>
-                <TextField label="Isem" name="name" required fullWidth disabled={submitting} />
+                <TextField label={t('name')} name="name" required fullWidth disabled={submitting} />
                 <TextField
-                    label="Email"
+                    label={t('email')}
                     name="email"
                     type="email"
                     required
@@ -97,13 +99,13 @@ const ContactForm = ({ bare = false }: ContactFormProps) => {
                     }}
                     onBlur={() => setEmailError(email.trim().length > 0 && !EMAIL_RE.test(email.trim()))}
                     error={emailError}
-                    helperText={emailError ? "Daħħal indirizz email validu." : " "}
+                    helperText={emailError ? t('invalidEmail') : " "}
                 />
-                <TextField label="Suġġett" name="subject" required fullWidth disabled={submitting} />
-                <TextField label="Messaġġ" name="message" required fullWidth multiline minRows={5} disabled={submitting} />
+                <TextField label={t('subject')} name="subject" required fullWidth disabled={submitting} />
+                <TextField label={t('message')} name="message" required fullWidth multiline minRows={5} disabled={submitting} />
                 {error && <Alert severity="error">{error}</Alert>}
                 <Button type="submit" variant="contained" color="cta" size="large" sx={{ py: 1.25 }} disabled={submitting}>
-                    {submitting ? "Qed jintbagħat…" : "Ibgħat"}
+                    {submitting ? t('submitting') : t('submit')}
                 </Button>
             </Stack>
         </Box>
@@ -127,7 +129,7 @@ const ContactForm = ({ bare = false }: ContactFormProps) => {
                 anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
             >
                 <Alert severity="success" variant="filled" onClose={() => setToastOpen(false)} sx={{ width: "100%" }}>
-                    {"Il-messaġġ intbagħat — grazzi!"}
+                    {t('toast')}
                 </Alert>
             </Snackbar>
         </>

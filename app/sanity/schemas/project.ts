@@ -18,23 +18,27 @@ export const projectType = defineType({
     defineField({
       name: "title",
       title: "Titlu",
-      type: "string",
-      validation: (rule) => rule.required(),
+      type: "localeString",
+      validation: (rule) =>
+        rule.custom((value) =>
+          (value as { mt?: string } | undefined)?.mt ? true : "Il-Malti hu meħtieġ",
+        ),
     }),
     defineField({
       name: "tagline",
       title: "Punch line",
       description: "Sentenza waħda, qasira u qawwija.",
-      type: "string",
-      validation: (rule) => rule.required().max(120),
+      type: "localeString",
+      validation: (rule) =>
+        rule.custom((value) =>
+          (value as { mt?: string } | undefined)?.mt ? true : "Il-Malti hu meħtieġ",
+        ),
     }),
     defineField({
       name: "description",
       title: "Deskrizzjoni qasira",
       description: "Żomma qasira — żewġ sentenzi biżżejjed.",
-      type: "text",
-      rows: 3,
-      validation: (rule) => rule.max(280),
+      type: "localeText",
     }),
     defineField({
       name: "image",
@@ -67,6 +71,6 @@ export const projectType = defineType({
     }),
   ],
   preview: {
-    select: { title: "title", subtitle: "tagline", media: "image" },
+    select: { title: "title.mt", subtitle: "tagline.mt", media: "image" },
   },
 });

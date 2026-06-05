@@ -13,9 +13,12 @@ export const blogValuesType = defineType({
   fields: [
     defineField({
       name: "title",
-      type: "string",
-      initialValue: "Il-Valuri Tiegħi",
-      validation: (rule) => rule.required(),
+      type: "localeString",
+      initialValue: { mt: "Il-Valuri Tiegħi" },
+      validation: (rule) =>
+        rule.custom((value) =>
+          (value as { mt?: string } | undefined)?.mt ? true : "Il-Malti hu meħtieġ",
+        ),
     }),
     defineField({
       name: "values",
@@ -30,14 +33,19 @@ export const blogValuesType = defineType({
           fields: [
             defineField({
               name: "title",
-              type: "string",
-              validation: (rule) => rule.required(),
+              type: "localeString",
+              validation: (rule) =>
+                rule.custom((value) =>
+                  (value as { mt?: string } | undefined)?.mt ? true : "Il-Malti hu meħtieġ",
+                ),
             }),
             defineField({
               name: "text",
-              type: "text",
-              rows: 3,
-              validation: (rule) => rule.required(),
+              type: "localeText",
+              validation: (rule) =>
+                rule.custom((value) =>
+                  (value as { mt?: string } | undefined)?.mt ? true : "Il-Malti hu meħtieġ",
+                ),
             }),
             defineField({
               name: "icon",
@@ -50,7 +58,7 @@ export const blogValuesType = defineType({
             }),
           ],
           preview: {
-            select: { title: "title", subtitle: "icon" },
+            select: { title: "title.mt", subtitle: "icon" },
           },
         }),
       ],

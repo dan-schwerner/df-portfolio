@@ -20,26 +20,31 @@ export const blogAboutType = defineType({
     defineField({
       name: "title",
       title: "Heading",
-      type: "string",
-      initialValue: "Min Jien",
-      validation: (rule) => rule.required(),
+      type: "localeString",
+      initialValue: { mt: "Min Jien" },
+      validation: (rule) =>
+        rule.custom((value) =>
+          (value as { mt?: string } | undefined)?.mt ? true : "Il-Malti hu meħtieġ",
+        ),
     }),
     defineField({
       name: "headerQuote",
       title: "Header quote",
       description: "Is-sentenza qawwija f'ras it-taqsima.",
-      type: "text",
-      rows: 2,
-      initialValue:
-        "Nibni sistemi li jikbru, jifilħu għall-piż, u jwasslu dak li jwiegħdu.",
+      type: "localeText",
+      initialValue: {
+        mt: "Nibni sistemi li jikbru, jifilħu għall-piż, u jwasslu dak li jwiegħdu.",
+      },
     }),
     defineField({
       name: "content",
       title: "Content",
       description: "Ħalli linja vojta bejn il-paragrafi.",
-      type: "text",
-      rows: 6,
-      validation: (rule) => rule.required(),
+      type: "localeText",
+      validation: (rule) =>
+        rule.custom((value) =>
+          (value as { mt?: string } | undefined)?.mt ? true : "Il-Malti hu meħtieġ",
+        ),
     }),
     defineField({
       name: "tags",
@@ -51,6 +56,6 @@ export const blogAboutType = defineType({
     }),
   ],
   preview: {
-    select: { title: "title", subtitle: "headerQuote" },
+    select: { title: "title.mt", subtitle: "headerQuote.mt" },
   },
 });

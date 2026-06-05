@@ -1,16 +1,19 @@
 'use client'
 
-import { getDayDifferenceText } from "@/app/utils"
+import { daysSince } from "@/app/utils"
 import { BlogPost } from "@/types/Types"
 import { Card, CardActionArea, CardContent, Typography } from "@mui/material"
+import { useTranslations } from "next-intl"
 import Link from "next/link"
 import { FC } from "react"
 
 const BlogCard:FC<BlogPost | undefined> = (post) => {
+    const t = useTranslations('blog')
     const cardHeaderSubtitle = () : string => {
-        if(!post){ return "Artiklu" }
-        if(!post.author){ return `Ippubblikat ${getDayDifferenceText(post?.publishedAt)}` }
-        return `${post.author} - ${getDayDifferenceText(post?.publishedAt)}`
+        if(!post){ return t('articleFallback') }
+        const relative = t('relativeDays', { days: daysSince(post?.publishedAt) })
+        if(!post.author){ return t('publishedRelative', { relative }) }
+        return `${post.author} - ${relative}`
     }
 
     return (

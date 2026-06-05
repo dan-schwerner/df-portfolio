@@ -1,30 +1,35 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import './global.css';
-import {promises as fs } from 'fs';
-import { MenuItem } from "@/types/Types";
 import theme from "@/theme";
 import HeaderMenu from "@/components/header-menu/HeaderMenu";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v16-appRouter';
 import { ThemeProvider } from "@mui/material/styles";
 import Footer from "@/components/footer/Footer";
+import { NextIntlClientProvider } from 'next-intl';
+import { getLocale, getMessages, getTranslations } from 'next-intl/server';
 
-export const metadata: Metadata = {
-  title: "Dan Falzon — Portafoll",
-  description: "Il-portafoll, l-esperjenza, u l-blog ta' Dan Falzon.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('metadata');
+  return {
+    title: t('title'),
+    description: t('description'),
+  };
+}
 
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-  const response = await fs.readFile(process.cwd() + '/app/data/menuItems.json', 'utf8');
-  const menuItems: MenuItem[] = JSON.parse(response).data;
+  // Active locale (from the NEXT_LOCALE cookie) and the matching message catalog.
+  // `messages` is passed explicitly so client components — including the
+  // dynamically-imported subtrees — receive them on the client.
+  const locale = await getLocale();
+  const messages = await getMessages();
 
   return (
-    <html lang="mt">
+    <html lang={locale}>
       <head>
         {/* Google tag (gtag.js) */}
         <Script
@@ -42,15 +47,17 @@ export default async function RootLayout({
         </Script>
       </head>
       <body>
-        <AppRouterCacheProvider>
-          <ThemeProvider theme={theme}>
-            <header>
-              <HeaderMenu menuItems={menuItems} />
-            </header>
-            {children}
-            <Footer />
-          </ThemeProvider>
-        </AppRouterCacheProvider>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <AppRouterCacheProvider>
+            <ThemeProvider theme={theme}>
+              <header>
+                <HeaderMenu />
+              </header>
+              {children}
+              <Footer />
+            </ThemeProvider>
+          </AppRouterCacheProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

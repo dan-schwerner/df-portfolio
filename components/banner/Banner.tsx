@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState, type FormEvent } from "react";
 import { Alert, Box, Button, Container, Snackbar, Stack, TextField, Typography } from "@mui/material";
+import { useTranslations } from "next-intl";
 import profilepic from "./profilepic.png";
 import vallettaBg from "./Valletta-BANNER.webp";
 
@@ -10,6 +11,7 @@ import vallettaBg from "./Valletta-BANNER.webp";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const Banner = () => {
+    const t = useTranslations('banner');
     const [email, setEmail] = useState("");
     const [emailError, setEmailError] = useState(false);
     const [submitting, setSubmitting] = useState(false);
@@ -34,12 +36,12 @@ const Banner = () => {
             });
             const json = await res.json().catch(() => ({}));
             if (!res.ok || !json.ok) {
-                throw new Error(json.error || "Xi ħaġa marret ħażin. Erġa' pprova.");
+                throw new Error(json.error || t('error'));
             }
             setEmail("");
             setToastOpen(true);
         } catch (err) {
-            setError(err instanceof Error ? err.message : "Xi ħaġa marret ħażin. Erġa' pprova.");
+            setError(err instanceof Error ? err.message : t('error'));
         } finally {
             setSubmitting(false);
         }
@@ -93,9 +95,9 @@ const Banner = () => {
                 }}
             >
                 <Container sx={{ py: { xs: 4, md: 0 } }}>
-                    <Typography sx={{fontSize: '1.6rem', color: 'white'}}>L-Iklin</Typography>
-                    <Typography variant="h1" sx={{fontSize: {xs: '3.25rem', md: '5.5rem'}, color: 'white'}}>Daniel Falzon</Typography>
-                    <Typography sx={{fontSize: '1.6rem', color: 'white', marginTop: '1rem'}}>Software Engineer and Manager</Typography>
+                    <Typography sx={{fontSize: '1.6rem', color: 'white'}}>{t('location')}</Typography>
+                    <Typography variant="h1" sx={{fontSize: {xs: '3.25rem', md: '5.5rem'}, color: 'white'}}>{t('name')}</Typography>
+                    <Typography sx={{fontSize: '1.6rem', color: 'white', marginTop: '1rem'}}>{t('role')}</Typography>
 
                     {/* In-your-face CTA: inline email capture. */}
                     <Box sx={{ mt: '2.5rem', maxWidth: 540 }}>
@@ -124,8 +126,8 @@ const Banner = () => {
                                     }}
                                     onBlur={() => setEmailError(email.trim().length > 0 && !EMAIL_RE.test(email.trim()))}
                                     error={emailError}
-                                    placeholder="l-email tiegħek"
-                                    aria-label="Email"
+                                    placeholder={t('emailPlaceholder')}
+                                    aria-label={t('emailAria')}
                                     sx={{
                                         bgcolor: 'white',
                                         borderRadius: 1,
@@ -152,13 +154,13 @@ const Banner = () => {
                                         flexShrink: 0
                                     }}
                                 >
-                                    {submitting ? 'Mistenni…' : 'Ejja Nitkellmu'}
+                                    {submitting ? t('submitting') : t('submit')}
                                 </Button>
                             </Stack>
                             <Typography sx={{ color: (emailError || error) ? '#ffb4ab' : 'rgba(255,255,255,0.9)', fontSize: '0.85rem', mt: 1 }}>
                                 {emailError
-                                    ? "Daħħal indirizz email validu."
-                                    : (error || "Ħalli l-email tiegħek u nikkuntattjak — bla obbligu.")}
+                                    ? t('invalidEmail')
+                                    : (error || t('prompt'))}
                             </Typography>
                         </Box>
                     </Box>
@@ -179,7 +181,7 @@ const Banner = () => {
                     >
                         <Image
                             src={profilepic}
-                            alt="Ritratt ta' Daniel Falzon"
+                            alt={t('profileAlt')}
                             fill
                             sizes="(max-width: 900px) 100vw, 50vw"
                             priority
@@ -202,7 +204,7 @@ const Banner = () => {
             anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         >
             <Alert severity="success" variant="filled" onClose={() => setToastOpen(false)} sx={{ width: '100%' }}>
-                {"Grazzi! Irċevejt l-email tiegħek u nerġa' lura għandek dalwaqt."}
+                {t('success')}
             </Alert>
         </Snackbar>
         </>

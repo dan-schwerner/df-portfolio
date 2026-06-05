@@ -6,6 +6,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Box, Card, CardActionArea, Chip, Stack, Typography } from "@mui/material";
+import { useTranslations } from "next-intl";
 import { Project } from "@/types/Types";
 
 // Shown when a project has no image of its own, so the graphic-heavy cards
@@ -29,6 +30,8 @@ type ProjectsCarouselProps = {
 // A single project renders as one centred card; two-or-more use a swipeable
 // carousel. Either way each card is capped at CARD_MAX_WIDTH and centred.
 const ProjectsCarousel: FC<ProjectsCarouselProps> = ({ projects }) => {
+    const t = useTranslations('projects');
+
     if (!projects.length) return null;
 
     const renderCard = (project: Project) => {
@@ -128,7 +131,7 @@ const ProjectsCarousel: FC<ProjectsCarouselProps> = ({ projects }) => {
                                 transition: "background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease",
                             }}
                         >
-                            Ara l-Proġett ↗
+                            {t('viewProject')}
                         </Box>
                     )}
                 </Box>
@@ -204,6 +207,9 @@ const ProjectsCarousel: FC<ProjectsCarouselProps> = ({ projects }) => {
                 "& .slick-list": { mx: -2, py: 1 },
                 "& .slick-slide > div": { height: "100%", px: 2 },
                 "& .slick-track": { display: "flex" },
+                // See BlogCarousel: neutralise slick's clearfix pseudo-elements so they
+                // don't become phantom flex items that narrow the cards on Safari.
+                "& .slick-track::before, & .slick-track::after": { display: "none" },
                 "& .slick-slide": { height: "auto" },
                 "& .slick-dots": { position: "static", mt: 3 },
             }}

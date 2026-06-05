@@ -1,4 +1,4 @@
-import { defineType, defineField, defineArrayMember } from "sanity";
+import { defineType, defineField } from "sanity";
 
 /**
  * Blog post document type.
@@ -50,23 +50,7 @@ export const postType = defineType({
     defineField({
       name: "body",
       title: "Body",
-      type: "array",
-      of: [
-        defineArrayMember({ type: "block" }),
-        defineArrayMember({
-          type: "image",
-          title: "Image section",
-          options: { hotspot: true },
-          fields: [
-            defineField({
-              name: "alt",
-              title: "Alternative text",
-              type: "string",
-            }),
-            defineField({ name: "caption", title: "Caption", type: "string" }),
-          ],
-        }),
-      ],
+      type: "blockContent",
     }),
   ],
   preview: {

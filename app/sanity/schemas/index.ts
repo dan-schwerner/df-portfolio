@@ -3,6 +3,11 @@ import { blogAboutType } from "./blogAbout";
 import { blogValuesType } from "./blogValues";
 import { postType } from "./post";
 import { projectType } from "./project";
+import {
+  localeStringType,
+  localeTextType,
+  blockContentType,
+} from "./localeTypes";
 
 /**
  * Schema types registered with the Sanity Studio. Add new document/object
@@ -12,4 +17,14 @@ import { projectType } from "./project";
  *   ...
  *   schema: { types: schemaTypes }
  */
-export const schemaTypes: SchemaTypeDefinition[] = [postType, projectType, blogAboutType, blogValuesType];
+export const schemaTypes: SchemaTypeDefinition[] = [
+  // Localization building blocks (referenced by the document types below).
+  localeStringType,
+  localeTextType,
+  blockContentType,
+  // Document types.
+  postType,
+  projectType,
+  blogAboutType,
+  blogValuesType,
+];

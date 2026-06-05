@@ -3,6 +3,14 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  margin-top: 5rem
+  /* Clears the fixed header (5rem on desktop). */
+  margin-top: 5rem;
+}
+
+/* Header is a slim 3.5rem bar on mobile (see HeaderMenu Toolbar). */
+@media (max-width: 599.95px) {
+  .main {
+    margin-top: 3.5rem;
+  }
 }
 

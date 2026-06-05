@@ -1,0 +1,85 @@
+{
+  "metadata": {
+    "title": "Dan Falzon — Portfolio",
+    "description": "The portfolio, experience, and blog of Dan Falzon."
+  },
+  "nav": {
+    "home": "Home",
+    "projects": "Projects",
+    "about": "About",
+    "blog": "Blog",
+    "recommendations": "Recommendations",
+    "contact": "Contact"
+  },
+  "a11y": {
+    "openMenu": "open menu"
+  },
+  "home": {
+    "projectsHeading": "My Projects",
+    "blogHeading": "Blog"
+  },
+  "banner": {
+    "location": "L-Iklin",
+    "name": "Daniel Falzon",
+    "role": "Software Engineer and Manager",
+    "emailPlaceholder": "your email",
+    "emailAria": "Email",
+    "submit": "Let's Talk",
+    "submitting": "Sending…",
+    "invalidEmail": "Enter a valid email address.",
+    "prompt": "Leave your email and I'll get in touch — no obligation.",
+    "error": "Something went wrong. Please try again.",
+    "success": "Thanks! I've received your email and I'll get back to you soon.",
+    "profileAlt": "Photo of Daniel Falzon"
+  },
+  "contact": {
+    "heading": "Contact Me",
+    "intro": "Want to collaborate on a project or discuss one of my blog posts? Don't hesitate to get in touch!",
+    "linkedin": "LinkedIn"
+  },
+  "contactForm": {
+    "name": "Name",
+    "email": "Email",
+    "subject": "Subject",
+    "message": "Message",
+    "submit": "Send",
+    "submitting": "Sending…",
+    "invalidEmail": "Enter a valid email address.",
+    "successTitle": "Thanks for getting in touch!",
+    "successBody": "I'll reply as soon as I can.",
+    "toast": "Message sent — thank you!",
+    "error": "Something went wrong. Please try again."
+  },
+  "chatWidget": {
+    "open": "Open the contact form",
+    "title": "Contact Me",
+    "close": "close"
+  },
+  "projects": {
+    "viewProject": "View Project ↗"
+  },
+  "blog": {
+    "readMore": "Read More →",
+    "otherArticles": "Other Articles",
+    "notFound": "Article not found",
+    "articleFallback": "Article",
+    "relativeDays": "{days, plural, =0 {today} =1 {a day ago} other {# days ago}}",
+    "publishedRelative": "Published {relative}",
+    "authorDate": "{author} ({date})"
+  },
+  "recommendations": {
+    "heading": "What People Say"
+  },
+  "localeSwitcher": {
+    "label": "Language",
+    "mt": "Maltese",
+    "en": "English"
+  },
+  "contactApi": {
+    "invalidRequest": "Invalid request.",
+    "invalidEmail": "Enter a valid email.",
+    "emptyMessage": "Write a message.",
+    "notConfigured": "The email service is not configured yet.",
+    "sendFailed": "We couldn't send the message. Please try again."
+  }
+}

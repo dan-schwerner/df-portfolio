@@ -1,0 +1,85 @@
+{
+  "metadata": {
+    "title": "Dan Falzon — Portafoll",
+    "description": "Il-portafoll, l-esperjenza, u l-blog ta' Dan Falzon."
+  },
+  "nav": {
+    "home": "Il-Bidu",
+    "projects": "Proġetti",
+    "about": "Dwari",
+    "blog": "Blog",
+    "recommendations": "Rakkomandazzjonijiet",
+    "contact": "Kuntatt"
+  },
+  "a11y": {
+    "openMenu": "iftaħ il-menu"
+  },
+  "home": {
+    "projectsHeading": "Il-Proposti Tiegħi",
+    "blogHeading": "Blog"
+  },
+  "banner": {
+    "location": "L-Iklin",
+    "name": "Daniel Falzon",
+    "role": "Software Engineer and Manager",
+    "emailPlaceholder": "l-email tiegħek",
+    "emailAria": "Email",
+    "submit": "Ejja Nitkellmu",
+    "submitting": "Mistenni…",
+    "invalidEmail": "Daħħal indirizz email validu.",
+    "prompt": "Ħalli l-email tiegħek u nikkuntattjak — bla obbligu.",
+    "error": "Xi ħaġa marret ħażin. Erġa' pprova.",
+    "success": "Grazzi! Irċevejt l-email tiegħek u nerġa' lura għandek dalwaqt.",
+    "profileAlt": "Ritratt ta' Daniel Falzon"
+  },
+  "contact": {
+    "heading": "Ikkuntattjani",
+    "intro": "Tixtieq tikkollabora fuq proġett jew tiddiskuti xi blog post tiegħi? Tiddejjaqx tikkuntattjani!",
+    "linkedin": "LinkedIn"
+  },
+  "contactForm": {
+    "name": "Isem",
+    "email": "Email",
+    "subject": "Suġġett",
+    "message": "Messaġġ",
+    "submit": "Ibgħat",
+    "submitting": "Qed jintbagħat…",
+    "invalidEmail": "Daħħal indirizz email validu.",
+    "successTitle": "Grazzi talli ġejt f'kuntatt!",
+    "successBody": "Se nwieġeb malajr kemm jista' jkun.",
+    "toast": "Il-messaġġ intbagħat — grazzi!",
+    "error": "Xi ħaġa marret ħażin. Erġa' pprova."
+  },
+  "chatWidget": {
+    "open": "Iftaħ il-formola tal-kuntatt",
+    "title": "Ikkuntattjani",
+    "close": "agħlaq"
+  },
+  "projects": {
+    "viewProject": "Ara l-Proġett ↗"
+  },
+  "blog": {
+    "readMore": "Aqra Aktar →",
+    "otherArticles": "Artikli Oħra",
+    "notFound": "L-artiklu ma nstabx",
+    "articleFallback": "Artiklu",
+    "relativeDays": "{days, plural, =0 {illum} =1 {ġurnata ilu} other {# ġranet ilu}}",
+    "publishedRelative": "Ippubblikat {relative}",
+    "authorDate": "{author} ({date})"
+  },
+  "recommendations": {
+    "heading": "X'Jgħidu n-Nies"
+  },
+  "localeSwitcher": {
+    "label": "Lingwa",
+    "mt": "Bil-Malti",
+    "en": "Bl-Ingliż"
+  },
+  "contactApi": {
+    "invalidRequest": "Talba invalida.",
+    "invalidEmail": "Daħħal email valida.",
+    "emptyMessage": "Ikteb messaġġ.",
+    "notConfigured": "Is-servizz tal-email għadu mhux ikkonfigurat.",
+    "sendFailed": "Ma rnexxilniex nibagħtu l-messaġġ. Erġa' pprova."
+  }
+}

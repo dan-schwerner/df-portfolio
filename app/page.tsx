@@ -11,15 +11,19 @@ import BlogCarousel from '@/components/blog-carousel/BlogCarousel';
 import ProjectsCarousel from '@/components/projects-carousel/ProjectsCarousel';
 import ChatWidget from '@/components/chat-widget/ChatWidget';
 import { Typography } from '@mui/material';
+import { getTranslations, getLocale } from 'next-intl/server';
+import { type Locale } from '@/i18n/config';
 import { getBlogAbout, BLOG_ABOUT_FALLBACK, getBlogValues, BLOG_VALUES_FALLBACK, getBlogPosts, getProjects, PROJECTS_FALLBACK } from './sanity/queries';
 
 export default async function Home() {
 
-  const [aboutDoc, valuesDoc, blogPosts, projectDocs] = await Promise.all([getBlogAbout(), getBlogValues(), getBlogPosts(), getProjects()]);
-  const about = aboutDoc ?? BLOG_ABOUT_FALLBACK;
-  const values = valuesDoc ?? BLOG_VALUES_FALLBACK;
+  const t = await getTranslations('home');
+  const locale = (await getLocale()) as Locale;
+  const [aboutDoc, valuesDoc, blogPosts, projectDocs] = await Promise.all([getBlogAbout(locale), getBlogValues(locale), getBlogPosts(), getProjects(locale)]);
+  const about = aboutDoc ?? BLOG_ABOUT_FALLBACK[locale];
+  const values = valuesDoc ?? BLOG_VALUES_FALLBACK[locale];
   // Show real projects when any exist, otherwise the placeholder examples.
-  const projects = projectDocs.length ? projectDocs : PROJECTS_FALLBACK;
+  const projects = projectDocs.length ? projectDocs : PROJECTS_FALLBACK[locale];
 
   const recommendationResponse = await fs.readFile(process.cwd() + '/app/data/recommendationContent.json', 'utf8');
   const recommendations: Recommendation[] = JSON.parse(recommendationResponse).data;
@@ -28,7 +32,7 @@ export default async function Home() {
     <main className={styles.main}>
       <Banner />
       <Section sx={{ pb: { xs: 1, md: 2 } }}>
-        <Typography variant="h2" component="h2" id="projects">Il-Proposti Tiegħi</Typography>
+        <Typography variant="h2" component="h2" id="projects">{t('projectsHeading')}</Typography>
         <ProjectsCarousel projects={projects} />
       </Section>
       <Section variant="muted">
@@ -36,7 +40,7 @@ export default async function Home() {
       </Section>
       {blogPosts.length > 0 && (
         <Section>
-          <Typography variant="h2" component="h2" id="blog">Blog</Typography>
+          <Typography variant="h2" component="h2" id="blog">{t('blogHeading')}</Typography>
           <BlogCarousel posts={blogPosts} />
         </Section>
       )}

@@ -1,43 +1,28 @@
 import { PortableText } from "next-sanity";
+import { getTranslations, getFormatter } from "next-intl/server";
 import styles from "@/app/page.module.css";
 import { client } from "../../sanity/client";
 import { Container, Typography, Box, Divider, Grid } from "@mui/material";
 import Contact from "@/components/contact/Contact";
-import mapToBlogPost from "@/app/sanity/mappers";
 import { BlogPost } from "@/types/Types";
 import BlogCard from "@/components/blog-card/BlogCard";
 import { getPortableTextComponents } from "@/app/sanity/portableTextComponents";
+import { getPostBySlug, getOtherPosts } from "@/app/sanity/queries";
 
-const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]`;
-const OTHER_POSTS_QUERY = `*[_type == "post" && defined(slug.current) && slug.current != $slug]|order(publishedAt desc)[0...3]{
-  _id,
-  title,
-  image,
-  body,
-  slug,
-  author,
-  publishedAt,
-  "excerpt": array::join(string::split((pt::text(body)), "")[0..155], "") + "..."
-}`;
-
-const options = { next: { revalidate: 30 } };
 const { projectId, dataset } = client.config();
 const portableTextComponents = getPortableTextComponents(projectId, dataset);
 
 export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const [post, otherPosts] = await Promise.all([
-    client.fetch(POST_QUERY, { slug }, options),
-    client.fetch(OTHER_POSTS_QUERY, { slug }, options)
+  const t = await getTranslations('blog');
+  const format = await getFormatter();
+  const [blogPost, otherBlogPosts] = await Promise.all([
+    getPostBySlug(slug),
+    getOtherPosts(slug),
   ]);
 
-  const blogPost = mapToBlogPost(post, projectId, dataset);
-  const otherBlogPosts = otherPosts
-    .map((post: any) => mapToBlogPost(post, projectId, dataset))
-    .filter((post: BlogPost | undefined): post is BlogPost => post !== undefined);
-
   if (!blogPost) {
-    return <div>L-artiklu ma nstabx</div>;
+    return <div>{t('notFound')}</div>;
   }
 
   return (
@@ -58,7 +43,10 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
               </Typography>
               
               <Typography variant="body2" color="text.secondary" sx={{ mb: 4 }}>
-                {blogPost.author} ({new Date(blogPost.publishedAt).toLocaleDateString('mt-MT')})
+                {t('authorDate', {
+                  author: blogPost.author,
+                  date: format.dateTime(new Date(blogPost.publishedAt), 'medium'),
+                })}
               </Typography>
 
               {blogPost.imageUrl && (
@@ -98,7 +86,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
             }}
           >
             <Box sx={{ py: 4 }}>
-              <Typography variant="h5" sx={{ mb: 3 }}>Artikli Oħra</Typography>
+              <Typography variant="h5" sx={{ mb: 3 }}>{t('otherArticles')}</Typography>
               <Grid
                 container
                 spacing={2}

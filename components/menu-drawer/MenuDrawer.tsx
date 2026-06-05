@@ -22,7 +22,7 @@ const MenuDrawer: FC<MenuDrawerProps> = ({enabled, callback, menuItems}) => {
               }}
               sx={{
                 display: { xs: 'block', sm: 'none' },
-                '& .MuiDrawer-paper': { boxSizing: 'border-box', width: '100vw', top: '5rem' },
+                '& .MuiDrawer-paper': { boxSizing: 'border-box', width: '100vw', top: { xs: '3.5rem', sm: '5rem' } },
               }}
         >
             <Box onClick={callback} sx={{ textAlign: 'center' }}>
